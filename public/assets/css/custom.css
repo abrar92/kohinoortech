@@ -1,0 +1,19 @@
+.edit-link{
+    color: blue;
+    cursor: pointer;
+}
+
+.delete-link{
+    color: red;
+    cursor: pointer;
+}
+
+.add-new-button{
+    float: right;
+}
+
+.table-caption{
+    font-weight: bold;
+    color: blue;
+    font-size: large;
+}
