@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\MatrixController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,4 @@ Route::get('/', function () {
 
 Route::get('/user_list', [UserController::class, 'user_list'] );
 Route::get('/company_list', [CompanyController::class, 'company_list'] );
+Route::resource('matrix', 'App\Http\Controllers\MatrixController'); // This is a Resource Controller.

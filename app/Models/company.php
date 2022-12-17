@@ -14,10 +14,4 @@ class company extends Model
     protected $fillable = ['id','company_name',];
     protected $hidden = ['created_at','updated_at', 'deleted_at'];
 
-    public function matrix(){
-        /*  
-            # This method is to fetch all the users with associated companies.
-        */
-        return $this->hasMany(User::class);
-    }
 }
