@@ -216,9 +216,9 @@ class CompanyController extends Controller
             }
             $allUsers = User::all()->toArray();
             $userCollection = RelationMatrix::where('company_id', $request->id)->get();
-            if($userCollection->count() == 0){
+            if($userCollection->count() == 0 || $userCollection == null){
                 $existingUsers = [];
-                $$usersName = [];
+                $usersName = [];
             }else{
                 foreach($userCollection as $row){
                     $existingUsers[] = $row['user_id'];

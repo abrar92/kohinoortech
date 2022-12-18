@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
+use App\Models\Company;
 use App\Models\RelationMatrix;
 
 class UserController extends Controller
@@ -120,6 +121,43 @@ class UserController extends Controller
         } catch (\Exception $e) {
             // When any exception occurs.
             DB::rollback();
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    function get_user_company(Request $request){
+        try {           # Defined TRY Block to handle the Exception.
+            $validator = \Validator::make($request->all(), [
+                'id' => 'required|numeric'
+            ]);
+
+            if ($validator->fails()) {
+                // if the validation fails.
+                return response()->json([
+                    'message' => $validator->errors()->first(),
+                ], 500); // Response Sent with status 500 to Flag Error Response.
+            }
+            $allCompany = Company::all()->toArray();
+            $userCollection = RelationMatrix::where('user_id', $request->id)->get();
+            if($userCollection->count() == 0 || $userCollection == null){
+                $existingUsers = [];
+                $usersName = [];
+            }else{
+                foreach($userCollection as $row){
+                    $existingUsers[] = $row['company_id'];
+                    $usersName[] = $allCompany[$row['company_id']]['company_name'];
+                }
+            }
+            return response()->json([
+                'message' => 'Done',
+                'values'  => $existingUsers,
+                'names'   => $usersName
+            ], 200);
+
+        } catch (\Exception $e) {
+            // When any exception occurs.
             return response()->json([
                 'message' => $e->getMessage(),
             ], 500);

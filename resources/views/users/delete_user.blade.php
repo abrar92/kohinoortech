@@ -4,6 +4,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h2 class="modal-title" id="DeleteUserLabel">ALERT! Are you sure to delete User?</h2>
+          <h5 class="modal-sub-title" id="DeleteUserLabel">The User is not yet assigned to Company.</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -39,7 +40,16 @@
         modal.find('.modal-title').text('ALERT! Are you sure to delete User?')
         modal.find('.modal-body input').val(user_name)
         modal.find('#dlt_user_id').val(user_id)
-        
+        $.getJSON("{{route('get_user_company')}}?id="+user_id, function(result){
+          if(result.message == 'Done'){
+            if(result.names != ''){
+              var names = result.names.join(", ");
+              modal.find('.modal-sub-title').text('This User has been assigned to '+names)
+            }else{
+              modal.find('.modal-sub-title').text('This User is not yet assigned to Company.');
+            }
+          }
+        });
     });
 
     $('#btn-dlt-user').on('click', function (event) {
