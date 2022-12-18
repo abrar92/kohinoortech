@@ -1,7 +1,7 @@
 ## Application Setup:
-1- Configurations and Settings.
-2- Run the Migrations.
-3- Run the Seeders.
+1- Configurations and Settings.<br>
+2- Run the Migrations.<br>
+3- Run the Seeders.<br>
 
 
 
