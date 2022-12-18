@@ -22,3 +22,5 @@
 6- User email and name uniquness checked before add new. <br>
 7- Used Multi Select drop with search feature for large number of users count. <br>
 8- Feature added to show existing users to company in multiselect dropdown. <br>
+9- Feature Added to show the assigned users to company before Company Deletion. <br>
+10- Feature Added to show the assigned Company to User before User Deletion. <br>

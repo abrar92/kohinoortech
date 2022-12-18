@@ -25,6 +25,7 @@ Route::get('/user_list', [UserController::class, 'user_list'] );
 Route::post('/user_list/add_user', [UserController::class, 'add_user'])->name('add_user');
 Route::post('/user_list/edit_user', [UserController::class, 'edit_user'])->name('edit_user');
 Route::post('/user_list/delete_user', [UserController::class, 'delete_user'])->name('delete_user');
+Route::get('/user_list/get_user_company', [CompanyController::class, 'get_user_company'])->name('get_user_company');
 
 Route::get('/company_list', [CompanyController::class, 'company_list'] );
 Route::post('/company_list/modify_user', [CompanyController::class, 'modify_user'])->name('modify_user');

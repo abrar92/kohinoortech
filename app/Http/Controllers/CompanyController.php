@@ -214,18 +214,21 @@ class CompanyController extends Controller
                     'message' => $validator->errors()->first(),
                 ], 500); // Response Sent with status 500 to Flag Error Response.
             }
-
+            $allUsers = User::all()->toArray();
             $userCollection = RelationMatrix::where('company_id', $request->id)->get();
             if($userCollection->count() == 0){
                 $existingUsers = [];
+                $$usersName = [];
             }else{
                 foreach($userCollection as $row){
                     $existingUsers[] = $row['user_id'];
+                    $usersName[] = $allUsers[$row['user_id']]['name'];
                 }
             }
             return response()->json([
                 'message' => 'Done',
-                'values'  => $existingUsers
+                'values'  => $existingUsers,
+                'names'   => $usersName
             ], 200);
 
         } catch (\Exception $e) {
