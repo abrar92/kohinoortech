@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\User;
 use App\Models\Company;
@@ -55,6 +56,7 @@ class UserController extends Controller
                 ], 200);
             }           
         } catch (\Exception $e) {
+            Log::error($e);
             return response()->json([
                 'message' => $e->getMessage(),
             ], 500);
@@ -83,6 +85,7 @@ class UserController extends Controller
             ], 200); // Returnng Success Response.
 
         } catch (\Exception $e) {
+            Log::error($e);
             // When any exception occurs.
             return response()->json([
                 'message' => $e->getMessage(),
@@ -119,6 +122,7 @@ class UserController extends Controller
             ], 200); // Returnng Success Response.
 
         } catch (\Exception $e) {
+            Log::error($e);
             // When any exception occurs.
             DB::rollback();
             return response()->json([
@@ -157,6 +161,7 @@ class UserController extends Controller
             ], 200);
 
         } catch (\Exception $e) {
+            Log::error($e);
             // When any exception occurs.
             return response()->json([
                 'message' => $e->getMessage(),

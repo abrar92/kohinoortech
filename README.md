@@ -24,3 +24,4 @@
 8- Feature added to show existing users to company in multiselect dropdown. <br>
 9- Feature Added to show the assigned users to company before Company Deletion. <br>
 10- Feature Added to show the assigned Company to User before User Deletion. <br>
+11- Used Log facaed to log the error runtime so that it could be resolved later and going likewise can build error free application. <br>

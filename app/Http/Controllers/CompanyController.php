@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Validator;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\Company;
 use App\Models\User;
@@ -56,6 +57,7 @@ class CompanyController extends Controller
                 ], 200);
             }           
         } catch (\Exception $e) {
+            Log::error($e);
             return response()->json([
                 'message' => $e->getMessage(),
             ], 500);
@@ -83,6 +85,7 @@ class CompanyController extends Controller
             ], 200); // Returnng Success Response.
 
         } catch (\Exception $e) {
+            Log::error($e);
             // When any exception occurs.
             return response()->json([
                 'message' => $e->getMessage(),
@@ -119,6 +122,7 @@ class CompanyController extends Controller
             ], 200); // Returnng Success Response.
 
         } catch (\Exception $e) {
+            Log::error($e);
             // When any exception occurs.
             DB::rollback();
             return response()->json([
@@ -195,6 +199,7 @@ class CompanyController extends Controller
                 'message' => 'Done',
             ], 200); // Returnng Success Response.
         } catch (\Exception $e) {
+            Log::error($e);
             // When any exception occurs.
             return response()->json([
                 'message' => $e->getMessage(),
@@ -232,6 +237,7 @@ class CompanyController extends Controller
             ], 200);
 
         } catch (\Exception $e) {
+            Log::error($e);
             // When any exception occurs.
             return response()->json([
                 'message' => $e->getMessage(),
