@@ -16,7 +16,7 @@
             </div>
             <div class="form-group">
               <label for="message-text" class="col-form-label">Users:</label>
-              <select id="selectUsers" class="selectpicker" multiple data-live-search="true">
+              <select name="selectUsers" id="selectUsers" class="selectpicker" multiple data-live-search="true">
                 @foreach($users as $user)
                 <option value="{{$user['id']}}" >{{$user['name']}}</option>
                 @endforeach
@@ -47,7 +47,17 @@
         modal.find('.modal-title').text('Adding New User to ' + company_name)
         modal.find('.modal-body input').val(company_name)
         modal.find('#company_id').val(company_id)
-        
+        $.getJSON("{{route('get_company_user')}}?id="+company_id, function(result){
+          if(result.message == 'Done'){
+            var ids = result.values;
+            //Check the selected attribute for the real select
+            $('select[name=selectUsers]').val(ids);
+            //Get the text using the value of select
+            var text = jQuery("#selectUsers option:selected").text(); 
+            //We need to show the text inside the span that the plugin show
+            $('select[name=selectUsers]').selectpicker('refresh');
+          }
+        });
     });
 
     $('#btn-add-user').on('click', function (event) {
@@ -66,10 +76,17 @@
                     $("#resp_msg").text('Whoops, Please try again later!');
                     $("#resp_msg").css({'color': 'Green'});
                 }
+                setTimeout(function() {
+                    $('#addUserModal').modal('hide');
+                    location.reload();
+                }, 3000);
             },
             error: function(err){
                 $("#resp_msg").text(err.message);
                 $("#resp_msg").css({'color': 'Red'});
+                setTimeout(function() {
+                    $('#addUserModal').modal('hide');
+                }, 3000);
             }
         });
     });

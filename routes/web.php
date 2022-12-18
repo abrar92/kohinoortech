@@ -31,5 +31,6 @@ Route::post('/company_list/modify_user', [CompanyController::class, 'modify_user
 Route::post('/company_list/add_company', [CompanyController::class, 'add_company'])->name('add_company');
 Route::post('/company_list/edit_company', [CompanyController::class, 'edit_company'])->name('edit_company');
 Route::post('/company_list/delete_company', [CompanyController::class, 'delete_company'])->name('delete_company');
+Route::get('/company_list/get_company_user', [CompanyController::class, 'get_company_user'])->name('get_company_user');
 
-Route::resource('matrix', 'App\Http\Controllers\MatrixController'); // This is a Resource Controller.
+Route::resource('/matrix', 'App\Http\Controllers\MatrixController'); // This is a Resource Controller.

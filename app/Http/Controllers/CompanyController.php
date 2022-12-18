@@ -130,7 +130,7 @@ class CompanyController extends Controller
     function modify_user(Request $request){
         try {           # Defined TRY Block to handle the Exception.
             $validator = \Validator::make($request->all(), [
-                'userIds'    => 'required',
+                'userIds'    => 'required|numeric',
                 'company_id' => 'required|numeric'
             ]);
 
@@ -194,6 +194,40 @@ class CompanyController extends Controller
             return response()->json([
                 'message' => 'Done',
             ], 200); // Returnng Success Response.
+        } catch (\Exception $e) {
+            // When any exception occurs.
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    function get_company_user(Request $request){
+        try {           # Defined TRY Block to handle the Exception.
+            $validator = \Validator::make($request->all(), [
+                'id' => 'required|numeric'
+            ]);
+
+            if ($validator->fails()) {
+                // if the validation fails.
+                return response()->json([
+                    'message' => $validator->errors()->first(),
+                ], 500); // Response Sent with status 500 to Flag Error Response.
+            }
+
+            $userCollection = RelationMatrix::where('company_id', $request->id)->get();
+            if($userCollection->count() == 0){
+                $existingUsers = [];
+            }else{
+                foreach($userCollection as $row){
+                    $existingUsers[] = $row['user_id'];
+                }
+            }
+            return response()->json([
+                'message' => 'Done',
+                'values'  => $existingUsers
+            ], 200);
+
         } catch (\Exception $e) {
             // When any exception occurs.
             return response()->json([
