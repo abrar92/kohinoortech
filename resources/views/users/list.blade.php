@@ -10,7 +10,7 @@
                         <caption>
                             <span class="table-caption">List of Users:</span>
                             <span class="add-new-button">
-                                <button type="button" class="btn btn-primary btn-sm">Add New User</button>
+                                <button type="button" class="btn btn-success btn-sm">Add New User</button>
                             </span>
                         </caption>
                         <thead class="thead-dark">

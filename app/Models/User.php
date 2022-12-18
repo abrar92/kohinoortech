@@ -41,4 +41,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function users(){
+        return $this->belongsTo(RelationMatrix::class, 'foreign_key', 'user_id');
+    }
 }
