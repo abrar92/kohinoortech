@@ -62,11 +62,39 @@ class CompanyController extends Controller
         }
     }
 
+    function edit_company(Request $request){
+        try {
+            $validator = \Validator::make($request->all(), [
+                'company_id' => 'required|numeric',
+                'company_name' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                // if the validation fails.
+                return response()->json([
+                    'message' => $validator->errors()->first(),
+                ], 500); // Response Sent with status 500 to Flag Error Response.
+            }
+
+            Company::where('id', $request->company_id)->update(['company_name' => $request->company_name]);
+
+            return response()->json([
+                'message' => 'Done',
+            ], 200); // Returnng Success Response.
+
+        } catch (\Exception $e) {
+            // When any exception occurs.
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
     function delete_company(Request $request){
         DB::beginTransaction();
         try {
             $validator = \Validator::make($request->all(), [
-                'company_id' => 'required'
+                'company_id' => 'required|numeric'
             ]);
 
             if ($validator->fails()) {
@@ -103,7 +131,7 @@ class CompanyController extends Controller
         try {           # Defined TRY Block to handle the Exception.
             $validator = \Validator::make($request->all(), [
                 'userIds'    => 'required',
-                'company_id' => 'required'
+                'company_id' => 'required|numeric'
             ]);
 
             if ($validator->fails()) {

@@ -31,7 +31,7 @@
                                 <th scope="row">{{$counter}}</th>
                                 <td>{{$company['company_name']}}</td>
                                 <td><button type="button" class="btn btn-primary btn-sm" id="assign_user" data-toggle="modal" data-target="#addUserModal" data-company_id="{{$company['id']}}" data-whatever="{{$company['company_name']}}">Assign User</button></td>
-                                <td class="edit-link">Edit</td>
+                                <td class="edit-link"><button type="button" class="btn btn-info btn-sm" id="edit_company" data-toggle="modal" data-target="#EditCompany" data-company_id="{{$company['id']}}" data-whatever="{{$company['company_name']}}">Edit</button></td>
                                 <td class="delete-link"><button type="button" class="btn btn-danger btn-sm" id="delete_company" data-toggle="modal" data-target="#DeleteCompany" data-company_id="{{$company['id']}}" data-whatever="{{$company['company_name']}}">Delete</button></td>                      
                             </tr>
                             @php
@@ -51,4 +51,6 @@
     @include('companies.add_new_company');
 
     @include('companies.delete_company');
+
+    @include('companies.edit_company');
 </html>

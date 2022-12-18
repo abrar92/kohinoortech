@@ -10,7 +10,7 @@
                         <caption>
                             <span class="table-caption">List of Users:</span>
                             <span class="add-new-button">
-                                <button type="button" class="btn btn-success btn-sm">Add New User</button>
+                                <button type="button" class="btn btn-success btn-sm" id="new_user" data-toggle="modal" data-target="#addNewUser">Add New User</button>
                             </span>
                         </caption>
                         <thead class="thead-dark">
@@ -31,8 +31,8 @@
                                 <th scope="row">{{$counter}}</th>
                                 <td>{{$user['name']}}</td>
                                 <td>{{$user['email']}}</td>
-                                <td class="edit-link">Edit</td>
-                                <td class="delete-link">Delete</td>                            
+                                <td class="edit-link"><button type="button" class="btn btn-info btn-sm" id="edit_user" data-toggle="modal" data-target="#EditUser" data-user_id="{{$user['id']}}" data-whatever="{{$user['name']}}" data-user_email="{{$user['email']}}">Edit</button></td>
+                                <td class="delete-link"><button type="button" class="btn btn-danger btn-sm" id="delete_user" data-toggle="modal" data-target="#DeleteUser" data-user_id="{{$user['id']}}" data-whatever="{{$user['name']}}">Delete</button></td>                            
                             </tr>
                             @php
                                 $counter++;
@@ -45,4 +45,11 @@
             </div>
         </div>
     </body>
+
+    @include('users.add_new_user');
+
+    @include('users.delete_user');
+
+    @include('users.edit_user');
+
 </html>
