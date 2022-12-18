@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Validator;
 
 use App\Models\Company;
 use App\Models\User;
 use App\models\RelationMatrix;
+use Faker\Extension\CompanyExtension;
+use PhpParser\Node\Stmt\TryCatch;
 
 class CompanyController extends Controller
 {
@@ -23,6 +26,77 @@ class CompanyController extends Controller
            // echo "<pre>";print_r($relationCollection); die;
         }
         return view('companies.list',$data); 
+    }
+
+    function add_company(Request $request){
+        try {
+            $validator = \Validator::make($request->all(), [
+                'company_name' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                // if the validation fails.
+                return response()->json([
+                    'message' => $validator->errors()->first(),
+                ], 500); // Response Sent with status 500 to Flag Error Response.
+            }
+
+            $check_name = Company::where('company_name', $request->company_name)->first(); 
+            if(is_null($check_name)){
+                // The Company Name does not exist.
+                $query_resp = Company::create(['company_name' => $request->company_name]);
+                return response()->json([
+                    'message' => 'Done',
+                ], 200);
+            }
+            else{
+                // Company Name already exist.
+                return response()->json([
+                    'message' => 'Company Name already exist.',
+                ], 200);
+            }           
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    function delete_company(Request $request){
+        DB::beginTransaction();
+        try {
+            $validator = \Validator::make($request->all(), [
+                'company_id' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                // if the validation fails.
+                return response()->json([
+                    'message' => $validator->errors()->first(),
+                ], 500); // Response Sent with status 500 to Flag Error Response.
+            }
+            $companyID =  $request->company_id;
+            
+            RelationMatrix::where('company_id', '=', $companyID)->delete();
+            
+            Company::where('id', '=', $companyID)->delete();
+            /* Have used transaction here.
+                Because if one of the query fails all transactio has to rolledback to maintain consistency.
+                Company has to be deleted either from both table or should not deleted.
+            */
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Done',
+            ], 200); // Returnng Success Response.
+
+        } catch (\Exception $e) {
+            // When any exception occurs.
+            DB::rollback();
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     function modify_user(Request $request){
